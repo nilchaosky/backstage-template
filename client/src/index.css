@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.ant-card-body {
+    padding: 0 !important;
+}
+
+.ant-table-cell {
+    padding: 8px !important;
+}
+
+.ant-menu.ant-menu-sub.ant-menu-inline {
+    background: transparent !important;
+}
