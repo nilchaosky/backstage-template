@@ -3,7 +3,7 @@ import { Button, Avatar, Dropdown, Space, message, Typography, theme } from 'ant
 import { UserOutlined, BellOutlined, SunOutlined, MoonOutlined, LockOutlined, LogoutOutlined } from '@ant-design/icons'
 import type { MenuProps } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { useTheme } from '@/hooks'
+import { useStore } from '@/hooks'
 import { logout } from '@/api/base'
 import { useAuthStore } from '@/store/authStore'
 import { useUserStore } from '@/store/userStore'
@@ -13,7 +13,7 @@ const { Text } = Typography
 const { useToken } = theme
 
 function HeaderActions() {
-  const { mode, toggleTheme } = useTheme()
+  const { mode, toggleTheme } = useStore()
   const navigate = useNavigate()
   const { clearToken } = useAuthStore()
   const { clearUserInfo, userInfo } = useUserStore()

@@ -5,7 +5,7 @@ import type { BaseResponse } from '@/types/index'
 import { useAuthStore } from '@/store/authStore'
 
 // API 基础 URL
-const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080'}/v1`
+const API_BASE_URL = `${import.meta.env['VITE_API_BASE_URL'] ?? 'http://localhost:8080'}/v1`
 
 // 创建 axios 实例
 const apiClient: AxiosInstance = axios.create({
@@ -48,7 +48,8 @@ apiClient.interceptors.response.use(
       
       // 检查业务状态码（0 或 200 表示成功）
       if (responseData.code === 0 || responseData.code === 200) {
-        return response
+        // 直接返回 data 部分，替换 response.data
+        return { ...response, data: responseData.data }
       }
       
       // 业务错误，显示错误信息并抛出

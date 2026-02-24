@@ -50,15 +50,35 @@ export default defineConfig({
         manualChunks: (id) => {
           // node_modules 中的包单独打包
           if (id.includes('node_modules')) {
-            // React 相关库
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-              return 'react-vendor'
+            // React 核心库
+            if (id.includes('react/') || id.includes('react-dom/')) {
+              return 'react-core'
             }
-            // Ant Design 相关库
-            if (id.includes('antd') || id.includes('@ant-design')) {
-              return 'antd-vendor'
+            // React Router
+            if (id.includes('react-router')) {
+              return 'react-router'
             }
-            // 其他第三方库
+            // Ant Design 相关（合并 antd 和图标）
+            if (id.includes('antd/') || id.includes('@ant-design/icons')) {
+              return 'antd'
+            }
+            // 工具库
+            if (id.includes('zustand') || id.includes('ahooks') || id.includes('axios')) {
+              return 'utils'
+            }
+            // Table Render
+            if (id.includes('table-render')) {
+              return 'table-render'
+            }
+            // 其他第三方库：尝试识别较大的依赖并单独打包
+            // 常见的较大依赖库
+            const largeDeps = ['lodash', 'moment', 'dayjs', 'date-fns', 'ramda']
+            for (const dep of largeDeps) {
+              if (id.includes(dep)) {
+                return `vendor-${dep}`
+              }
+            }
+            // 其他第三方库合并打包
             return 'vendor'
           }
           // 非 node_modules 的代码不进行手动分包
@@ -80,7 +100,7 @@ export default defineConfig({
         },
       },
     },
-    // 块大小警告限制（KB）
+    // 块大小警告限制（KB）- 核心库（antd、vendor）确实较大，这是正常的
     chunkSizeWarningLimit: 1000,
     // 禁用 gzip 压缩报告（可提升构建速度）
     reportCompressedSize: false,

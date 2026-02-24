@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Layout, Typography, theme, Card } from 'antd'
 import { Outlet } from 'react-router-dom'
-import { useTheme } from '@/hooks'
-import { getCurrentUser } from '@/api/user'
-import { useUserStore } from '@/store/userStore'
+import { useStore } from '@/hooks'
 import { APP_NAME } from '@/constants'
 import HeaderActions from './HeaderActions'
 import Sidebar from './Sidebar'
@@ -15,25 +13,8 @@ const { useToken } = theme
 
 function Home() {
   const [collapsed, setCollapsed] = useState(false)
-  const { mode } = useTheme()
+  const { mode } = useStore()
   const { token } = useToken()
-  const { setUserInfo } = useUserStore()
-
-  // 初始化时获取当前用户信息
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await getCurrentUser()
-        if (response.code === 0 || response.code === 200) {
-          setUserInfo(response.data)
-        }
-      } catch (error) {
-        console.error('获取用户信息失败:', error)
-      }
-    }
-
-    void fetchCurrentUser()
-  }, [setUserInfo])
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

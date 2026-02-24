@@ -26,14 +26,10 @@ function ChangePassword({ open, onClose }: ChangePasswordProps) {
         new_password: values.newPassword,
       }
 
-      const response = await changePassword(request)
-      if (response.code === 0 || response.code === 200) {
-        message.success('密码修改成功')
-        form.resetFields()
-        onClose()
-      } else {
-        message.error(response.message || '密码修改失败')
-      }
+      await changePassword(request)
+      message.success('密码修改成功')
+      form.resetFields()
+      onClose()
     } catch (error) {
       if (error && typeof error === 'object' && 'errorFields' in error) {
         // 表单验证错误，不需要处理

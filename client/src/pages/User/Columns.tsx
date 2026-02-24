@@ -1,19 +1,9 @@
 import { useMemo } from 'react'
 import { Tag, Space } from 'antd'
 import type { ColumnsType } from 'antd/es/table'
-import UpdateTemplate from './components/Update'
-import DeleteTemplate from './components/Delete'
-
-// 定义数据类型
-export interface TemplateItem {
-  id: string
-  name: string
-  type: string
-  status: 'active' | 'inactive'
-  description: string
-  createTime: string
-  updateTime: string
-}
+import type { User } from '@/types/response'
+import UpdateUser from './components/Update'
+import DeleteUser from './components/Delete'
 
 interface UseColumnsParams {
   onRefresh?: () => void
@@ -21,7 +11,7 @@ interface UseColumnsParams {
 }
 
 export const useColumns = ({ onRefresh, onRemoveFromSelection }: UseColumnsParams) => {
-  const columns = useMemo<ColumnsType<TemplateItem>>(
+  const columns = useMemo<ColumnsType<User>>(
     () => [
       {
         title: '序号',
@@ -33,16 +23,23 @@ export const useColumns = ({ onRefresh, onRemoveFromSelection }: UseColumnsParam
         },
       },
       {
-        title: '模板名称',
-        dataIndex: 'name',
-        key: 'name',
+        title: '用户名',
+        dataIndex: 'username',
+        key: 'username',
         align: 'center',
-        width: 180,
+        width: 150,
       },
       {
-        title: '类型',
-        dataIndex: 'type',
-        key: 'type',
+        title: '手机号',
+        dataIndex: 'phone',
+        key: 'phone',
+        align: 'center',
+        width: 130,
+      },
+      {
+        title: '角色代码',
+        dataIndex: 'role_code',
+        key: 'role_code',
         align: 'center',
         width: 120,
       },
@@ -52,31 +49,18 @@ export const useColumns = ({ onRefresh, onRemoveFromSelection }: UseColumnsParam
         key: 'status',
         align: 'center',
         width: 100,
-        render: (status: string) => {
+        render: (status: number) => {
           return (
-            <Tag color={status === 'active' ? 'success' : 'default'}>
-              {status === 'active' ? '启用' : '禁用'}
+            <Tag color={status === 1 ? 'success' : 'default'}>
+              {status === 1 ? '启用' : '禁用'}
             </Tag>
           )
         },
       },
       {
-        title: '描述',
-        dataIndex: 'description',
-        key: 'description',
-        ellipsis: true,
-      },
-      {
         title: '创建时间',
-        dataIndex: 'createTime',
-        key: 'createTime',
-        align: 'center',
-        width: 180,
-      },
-      {
-        title: '更新时间',
-        dataIndex: 'updateTime',
-        key: 'updateTime',
+        dataIndex: 'created_at',
+        key: 'created_at',
         align: 'center',
         width: 180,
       },
@@ -86,10 +70,10 @@ export const useColumns = ({ onRefresh, onRemoveFromSelection }: UseColumnsParam
         align: 'center',
         width: 150,
         fixed: 'right',
-        render: (_: unknown, record: TemplateItem) => (
+        render: (_: unknown, record: User) => (
           <Space size="small">
-            <UpdateTemplate id={record.id} name={record.name} onRefresh={onRefresh} />
-            <DeleteTemplate
+            <UpdateUser id={record.id} username={record.username} onRefresh={onRefresh} />
+            <DeleteUser
               id={record.id}
               onRefresh={onRefresh}
               onRemoveFromSelection={onRemoveFromSelection}

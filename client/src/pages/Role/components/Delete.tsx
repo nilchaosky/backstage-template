@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import { Button, Popconfirm, App } from 'antd'
+import { deleteRole } from '@/api/role'
 
 const { useApp } = App
 
-interface DeleteTemplateProps {
+interface DeleteRoleProps {
   id: string
   onRefresh?: () => void
   onRemoveFromSelection?: (id: string) => void
 }
 
-function DeleteTemplate({ id, onRefresh, onRemoveFromSelection }: DeleteTemplateProps) {
+function DeleteRole({ id, onRefresh, onRemoveFromSelection }: DeleteRoleProps) {
   const [loading, setLoading] = useState(false)
   const { message: messageApi } = useApp()
 
@@ -17,9 +18,8 @@ function DeleteTemplate({ id, onRefresh, onRemoveFromSelection }: DeleteTemplate
   const handleConfirm = async () => {
     try {
       setLoading(true)
-      // 模拟删除请求
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      
+      await deleteRole(id)
+
       messageApi.success('删除成功')
       onRemoveFromSelection?.(id)
       onRefresh?.()
@@ -50,4 +50,4 @@ function DeleteTemplate({ id, onRefresh, onRemoveFromSelection }: DeleteTemplate
   )
 }
 
-export default DeleteTemplate
+export default DeleteRole

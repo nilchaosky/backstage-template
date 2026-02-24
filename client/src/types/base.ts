@@ -18,6 +18,8 @@ export interface PaginationResult<T = unknown>  {
   hasMore: boolean
 }
 
+export type PageResponse<T = unknown> = PaginationResult<T>
+
 export interface SelectSearch {
   current: number
   size: number
