@@ -1,0 +1,6 @@
+[
+  {
+    "route": "/v1/login",
+    "method": "POST"
+  }
+]

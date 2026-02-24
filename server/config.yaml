@@ -1,0 +1,49 @@
+server:
+  host: "0.0.0.0"
+  port: "8080"
+  env: "debug"
+  route_prefix: "/v1"
+  max_concurrency: 1000
+  max_content_length: 10485760  # 10MB
+  timeout: 30
+
+log:
+  level: "debug"
+  encoder: "console"
+  encode_level: "lowercase_color"
+  prefix: "后台管理系统"
+  output_dir: "logs"
+  show_caller: true
+  console_output: true
+  max_age: 7
+
+redis:
+  address: "localhost"
+  port: 6379
+  password: "123456"
+  db: [0]
+
+jwt:
+  secret: "backstage-template"
+  issuer: "backstage-template"
+  duration: 168  # 7天 (7 * 24小时)
+  refresh_duration: 720  # 30天 (30 * 24小时)
+
+databases:
+  type: "postgres"
+  host: "localhost"
+  port: "5432"
+  user: "postgres"
+  password: "postgres"
+  db_name: "backstage-template"
+  params: "sslmode=disable&TimeZone=Asia/Shanghai"
+  log_mode: "info"
+  max_idle_conns: 10
+  max_open_conns: 100
+  conn_max_lifetime: 1
+
+oss:
+  endpoint: ""
+  bucket: ""
+  access_key_id: ""
+  access_key_secret: ""
