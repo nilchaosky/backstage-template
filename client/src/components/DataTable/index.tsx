@@ -119,19 +119,12 @@ function DataTableInner<T, S = unknown>(
           success: true,
         }
       }
-      // 业务错误
-      const errorMessage = response.message ?? '获取数据失败'
-      messageApi.error(errorMessage)
       return {
         data: [],
         total: 0,
         success: false,
       }
     } catch (error) {
-      // 网络错误或其他异常
-      const errorMessage = error instanceof Error ? error.message : '获取数据失败'
-      messageApi.error(errorMessage)
-      console.error('获取数据失败:', error)
       return {
         data: [],
         total: 0,
@@ -174,7 +167,6 @@ function DataTableInner<T, S = unknown>(
         // 刷新表格
         void tableRef.current?.refresh()
       } catch (error) {
-        console.error('批量删除失败:', error)
       }
     }
   }, [onBatchDelete, selectedRowKeys, handleSelectionChange])

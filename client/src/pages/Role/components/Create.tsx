@@ -36,8 +36,6 @@ function CreateRoleForm({ onClose, onSuccess }: CreateRoleFormProps) {
       if (error && typeof error === 'object' && 'errorFields' in error) {
         return
       }
-      messageApi.error('创建角色失败')
-      console.error('创建角色失败:', error)
     } finally {
       setLoading(false)
     }

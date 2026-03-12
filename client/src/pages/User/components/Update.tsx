@@ -36,8 +36,6 @@ function UpdateUser({ id, onRefresh }: UpdateUserProps) {
         })
       }
     } catch (error) {
-      messageApi.error('获取用户信息失败')
-      console.error('获取用户信息失败:', error)
     } finally {
       setFetching(false)
     }
@@ -71,8 +69,6 @@ function UpdateUser({ id, onRefresh }: UpdateUserProps) {
       if (error && typeof error === 'object' && 'errorFields' in error) {
         return
       }
-      messageApi.error('更新用户失败')
-      console.error('更新用户失败:', error)
     } finally {
       setLoading(false)
     }

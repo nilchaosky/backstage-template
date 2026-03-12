@@ -24,8 +24,6 @@ function DeleteUser({ id, onRefresh, onRemoveFromSelection }: DeleteUserProps) {
       onRemoveFromSelection?.(id)
       onRefresh?.()
     } catch (error) {
-      messageApi.error('删除失败')
-      console.error('删除失败:', error)
     } finally {
       setLoading(false)
     }

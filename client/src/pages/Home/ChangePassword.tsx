@@ -35,7 +35,6 @@ function ChangePassword({ open, onClose }: ChangePasswordProps) {
         // 表单验证错误，不需要处理
         return
       }
-      message.error('密码修改失败')
     } finally {
       setLoading(false)
     }

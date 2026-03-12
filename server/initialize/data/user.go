@@ -43,7 +43,7 @@ func InitUsers(ctx context.Context) error {
 		}
 
 		// 加密密码
-		hashedPassword, err := crypto.HashPassword("admin123")
+		hashedPassword, err := crypto.HashPassword("123456")
 		if err != nil {
 			logz.Logger.Error("密码加密失败", zap.Error(err))
 			return err

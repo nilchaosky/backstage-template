@@ -51,8 +51,6 @@ function Login() {
       // 跳转到首页
       navigate('/dashboard', { replace: true })
     } catch (error) {
-      // 错误处理（API 拦截器已经处理了错误并显示提示，这里只需要记录日志）
-      console.error('登录失败:', error)
     } finally {
       setLoading(false)
     }

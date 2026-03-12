@@ -40,8 +40,6 @@ function CreateUserForm({ onClose, onSuccess }: CreateUserFormProps) {
       if (error && typeof error === 'object' && 'errorFields' in error) {
         return
       }
-      messageApi.error('创建用户失败')
-      console.error('创建用户失败:', error)
     } finally {
       setLoading(false)
     }

@@ -56,7 +56,6 @@ function InfiniteScrollList<T extends { id: string | number }>({
         setHasMore(result.hasMore)
         setPage(currentPage)
       } catch (error) {
-        console.error('加载数据失败:', error)
       } finally {
         setLoading(false)
         loadingRef.current = false

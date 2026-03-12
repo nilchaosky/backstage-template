@@ -41,8 +41,6 @@ function RoleManagement() {
       clearSelection()
       refresh()
     } catch (error) {
-      messageApi.error('批量删除失败')
-      console.error('批量删除失败:', error)
     }
   }, [selectedRowKeys, messageApi, clearSelection, refresh])
 
