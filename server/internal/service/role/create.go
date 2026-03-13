@@ -6,15 +6,14 @@ import (
 	"server/internal/model"
 	"server/internal/types/request"
 
+	nexus_enum "github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/redis"
 	"github.com/nilchaosky/go-nexus/snowflake"
 	"go.uber.org/zap"
 )
 
 // CreateRole 创建角色
-func (s *Service) CreateRole(ctx context.Context, redisClient *redis.Client, req *request.CreateRoleRequest) error {
+func (s *Service) CreateRole(ctx context.Context, req *request.CreateRoleRequest) error {
 	existingRole, err := s.roleRepo.GetByCode(ctx, req.Code)
 	if err != nil {
 		logz.Logger.Error("创建角色失败：查询角色失败", zap.Error(err))

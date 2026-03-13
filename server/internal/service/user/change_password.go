@@ -7,13 +7,12 @@ import (
 	"server/internal/types/request"
 
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_utils/crypto"
-	"github.com/nilchaosky/go-nexus/redis"
+	"github.com/nilchaosky/go-nexus/utils/crypto"
 	"go.uber.org/zap"
 )
 
 // ChangePassword 修改密码
-func (s *Service) ChangePassword(ctx context.Context, redisClient *redis.Client, req *request.ChangePasswordRequest) error {
+func (s *Service) ChangePassword(ctx context.Context, req *request.ChangePasswordRequest) error {
 	userID := ctxutil.GetAuthID(ctx)
 	if userID.Int64() == 0 {
 		logz.Logger.Warn("修改密码失败：无法获取当前用户ID")
@@ -48,7 +47,7 @@ func (s *Service) ChangePassword(ctx context.Context, redisClient *redis.Client,
 		return errors.New("修改密码失败")
 	}
 
-	s.deleteCache(ctx, redisClient, userID.Int64())
+	s.deleteCache(ctx, userID.Int64())
 
 	return nil
 }

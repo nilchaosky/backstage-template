@@ -5,7 +5,7 @@ import (
 	"github.com/nilchaosky/file-store/oss"
 	"github.com/nilchaosky/go-nexus/logz"
 	"github.com/nilchaosky/go-nexus/redis"
-	"github.com/nilchaosky/go-nexus/redis/token"
+	"github.com/nilchaosky/go-nexus/token"
 )
 
 // Config 应用配置

@@ -13,11 +13,11 @@ import (
 )
 
 // getRoleDtoWithCache 使用缓存获取角色DTO
-func (s *Service) getRoleDtoWithCache(ctx context.Context, redisClient *redis.Client, roleID variant.SerializeInt64) (*dto.RoleDto, error) {
+func (s *Service) getRoleDtoWithCache(ctx context.Context, roleID variant.SerializeInt64) (*dto.RoleDto, error) {
 	key := s.roleRepo.GetCacheKey() + roleID.String()
 	var roleDto dto.RoleDto
 
-	err := redisClient.Cache(ctx, key, &roleDto, s.roleRepo.GetRedisDuration(), func() (interface{}, error) {
+	err := redis.Client.Cache(ctx, key, &roleDto, s.roleRepo.GetRedisDuration(), func() (interface{}, error) {
 		role, err := s.roleRepo.GetByID(ctx, roleID.Int64())
 		if err != nil {
 			logz.Logger.Error("获取角色信息失败：查询角色失败", zap.Error(err))
@@ -40,7 +40,7 @@ func (s *Service) getRoleDtoWithCache(ctx context.Context, redisClient *redis.Cl
 }
 
 // deleteCache 删除角色缓存
-func (s *Service) deleteCache(ctx context.Context, redisClient *redis.Client, ids ...int64) {
+func (s *Service) deleteCache(ctx context.Context, ids ...int64) {
 	if len(ids) == 0 {
 		return
 	}
@@ -51,7 +51,7 @@ func (s *Service) deleteCache(ctx context.Context, redisClient *redis.Client, id
 		keys = append(keys, key)
 	}
 
-	_, err := redisClient.Del(ctx, keys...)
+	_, err := redis.Client.Del(ctx, keys...)
 	if err != nil {
 		logz.Logger.Warn("删除角色缓存失败", zap.Error(err))
 	}

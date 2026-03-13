@@ -6,12 +6,11 @@ import (
 	"server/internal/types/request"
 
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/redis"
 	"go.uber.org/zap"
 )
 
 // UpdateUser 更新用户
-func (s *Service) UpdateUser(ctx context.Context, redisClient *redis.Client, req *request.UpdateUserRequest) error {
+func (s *Service) UpdateUser(ctx context.Context, req *request.UpdateUserRequest) error {
 	user, err := s.userRepo.GetByID(ctx, req.ID.Int64())
 	if err != nil {
 		logz.Logger.Warn("更新用户失败：查询用户失败", zap.Error(err))
@@ -50,7 +49,7 @@ func (s *Service) UpdateUser(ctx context.Context, redisClient *redis.Client, req
 		return errors.New("更新用户失败")
 	}
 
-	s.deleteCache(ctx, redisClient, req.ID.Int64())
+	s.deleteCache(ctx, req.ID.Int64())
 
 	return nil
 }

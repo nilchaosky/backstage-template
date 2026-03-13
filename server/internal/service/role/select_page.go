@@ -6,13 +6,12 @@ import (
 	"server/internal/dto"
 
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexusres_types"
-	"github.com/nilchaosky/go-nexus/redis"
+	nexus_types "github.com/nilchaosky/go-nexus/types"
 	"go.uber.org/zap"
 )
 
 // GetRoleSelectPage 分页获取角色选择器列表
-func (s *Service) GetRoleSelectPage(ctx context.Context, redisClient *redis.Client, current, size int, keyword string) (*nexusres_types.Page[dto.RoleDto], error) {
+func (s *Service) GetRoleSelectPage(ctx context.Context, current, size int, keyword string) (*nexus_types.Page[dto.RoleDto], error) {
 	roles, total, err := s.roleRepo.GetSelectPage(ctx, current, size, keyword)
 	if err != nil {
 		logz.Logger.Error("获取角色选择器列表失败", zap.Error(err))
@@ -21,7 +20,7 @@ func (s *Service) GetRoleSelectPage(ctx context.Context, redisClient *redis.Clie
 
 	records := make([]*dto.RoleDto, 0, len(roles))
 	for _, role := range roles {
-		roleDto, err := s.getRoleDtoWithCache(ctx, redisClient, role.ID)
+		roleDto, err := s.getRoleDtoWithCache(ctx, role.ID)
 		if err != nil {
 			logz.Logger.Warn("获取角色DTO失败", zap.Error(err), zap.Int64("role_id", role.ID.Int64()))
 			continue
@@ -31,7 +30,7 @@ func (s *Service) GetRoleSelectPage(ctx context.Context, redisClient *redis.Clie
 
 	hasMore := int64(current*size) < total
 
-	return &nexusres_types.Page[dto.RoleDto]{
+	return &nexus_types.Page[dto.RoleDto]{
 		Current: current,
 		Size:    size,
 		Total:   total,

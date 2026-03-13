@@ -11,8 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/nilchaosky/go-nexus/logz"
 	"github.com/nilchaosky/go-nexus/redis"
-	"github.com/nilchaosky/go-nexus/redis/token"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
+	"github.com/nilchaosky/go-nexus/token"
 	"go.uber.org/zap"
 )
 
@@ -116,10 +116,8 @@ func verifyAndProcessToken(c *gin.Context, requestPath, requestMethod string) (v
 	}
 
 	// 验证Redis中token是否有效
-	redisClient := redis.GetDefaultClient()
-
 	// 验证token是否匹配
-	storedAccessToken, _ := redisClient.GetToken(c.Request.Context(), idStr)
+	storedAccessToken, _ := redis.Client.GetToken(c.Request.Context(), idStr)
 	if storedAccessToken == "" {
 		logz.Logger.Warn("认证失败：token已被撤销或用户已退出登录")
 		c.String(http.StatusUnauthorized, "认证令牌已失效，请重新登录")
@@ -156,8 +154,7 @@ func verifyAndProcessToken(c *gin.Context, requestPath, requestMethod string) (v
 
 // checkPermission 从用户服务获取 URI 列表并校验当前请求是否有权限
 func checkPermission(c *gin.Context, userID variant.SerializeInt64, requestPath, requestMethod string) bool {
-	redisClient := redis.GetDefaultClient()
-	userDto, err := service.Get().User().GetUserByID(c.Request.Context(), redisClient, userID)
+	userDto, err := service.Get().User().GetUserByID(c.Request.Context(), userID)
 	if err != nil || userDto == nil {
 		logz.Logger.Warn("权限校验失败：获取用户信息失败", zap.Error(err))
 		c.String(http.StatusForbidden, "获取用户信息失败")

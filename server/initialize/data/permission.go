@@ -8,8 +8,8 @@ import (
 	"server/internal/model"
 	"server/internal/query"
 
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
 	"github.com/nilchaosky/go-nexus/serialize"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 	"github.com/nilchaosky/go-nexus/snowflake"
@@ -50,7 +50,7 @@ func flattenPermissions(dtos []dto.PermissionDto, parentCode string) []permissio
 }
 
 // InitPermissions 初始化权限数据
-// 支持项目升级时的权限同步：
+// 支持项目升级时的权限同步
 // 1. 从 permission.json 读取权限定义
 // 2. 新权限：自动添加
 // 3. 旧权限不变：保持原样
@@ -78,7 +78,7 @@ func InitPermissions(ctx context.Context) error {
 
 	// 开启事务处理所有权限
 	return query.Q.Transaction(func(tx *query.Query) error {
-		// 查询所有现有权限，按 code 建立映射
+		// 查询所有现有权限，从 code 建立映射
 		existingPermissions, err := tx.Permission.WithContext(ctx).Find()
 		if err != nil {
 			logz.Logger.Error("查询现有权限失败", zap.Error(err))

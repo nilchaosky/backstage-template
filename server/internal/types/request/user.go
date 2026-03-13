@@ -1,7 +1,7 @@
 package request
 
 import (
-	"github.com/nilchaosky/go-nexus/nexus_enum"
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 )
 
@@ -21,7 +21,7 @@ type GetUserListPageRequest struct {
 // CreateUserRequest 创建用户请求
 type CreateUserRequest struct {
 	Phone    string                 `json:"phone" label:"手机号"`                              // 手机号
-	Username string                 `json:"username" binding:"required,max=20" label:"用户名"` // 用户名（必填，最大20字符）
+	Username string                 `json:"username" binding:"required,max=20" label:"用户名"` // 用户名（必填，最多20字符）
 	Password string                 `json:"password" binding:"required,min=6" label:"密码"`   // 密码（必填，最少6字符）
 	RoleID   variant.SerializeInt64 `json:"role_id" binding:"required" label:"角色ID"`        // 角色ID（必填）
 }
@@ -30,7 +30,7 @@ type CreateUserRequest struct {
 type UpdateUserRequest struct {
 	ID       variant.SerializeInt64 `json:"id" binding:"required" label:"用户ID"`             // 用户ID（必填）
 	Phone    string                 `json:"phone" label:"手机号"`                              // 手机号
-	Username string                 `json:"username" binding:"required,max=20" label:"用户名"` // 用户名（必填，最大20字符）
+	Username string                 `json:"username" binding:"required,max=20" label:"用户名"` // 用户名（必填，最多20字符）
 	RoleID   variant.SerializeInt64 `json:"role_id" binding:"required" label:"角色ID"`        // 角色ID（必填）
 }
 

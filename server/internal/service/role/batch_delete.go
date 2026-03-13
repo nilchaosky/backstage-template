@@ -6,14 +6,13 @@ import (
 	"server/internal/ctxutil"
 	"server/internal/query"
 
+	nexus_enum "github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/redis"
 	"go.uber.org/zap"
 )
 
 // BatchDeleteRole 批量删除角色
-func (s *Service) BatchDeleteRole(ctx context.Context, redisClient *redis.Client, ids []int64) (int64, error) {
+func (s *Service) BatchDeleteRole(ctx context.Context, ids []int64) (int64, error) {
 	if len(ids) == 0 {
 		return 0, errors.New("角色ID列表不能为空")
 	}
@@ -51,7 +50,7 @@ func (s *Service) BatchDeleteRole(ctx context.Context, redisClient *redis.Client
 		return 0, err
 	}
 
-	s.deleteCache(ctx, redisClient, validIds...)
+	s.deleteCache(ctx, validIds...)
 
 	return count, nil
 }

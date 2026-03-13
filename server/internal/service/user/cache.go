@@ -14,11 +14,11 @@ import (
 )
 
 // getUserDtoWithCache 使用缓存获取用户DTO
-func (s *Service) getUserDtoWithCache(ctx context.Context, redisClient *redis.Client, userID variant.SerializeInt64) (*dto.UserDto, error) {
+func (s *Service) getUserDtoWithCache(ctx context.Context, userID variant.SerializeInt64) (*dto.UserDto, error) {
 	key := s.userRepo.GetCacheKey() + userID.String()
 	var userDto dto.UserDto
 
-	err := redisClient.Cache(ctx, key, &userDto, s.userRepo.GetRedisDuration(), func() (interface{}, error) {
+	err := redis.Client.Cache(ctx, key, &userDto, s.userRepo.GetRedisDuration(), func() (interface{}, error) {
 		q := ctxutil.GetQuery(ctx)
 
 		user, err := s.userRepo.GetByID(ctx, userID.Int64())
@@ -110,7 +110,7 @@ func (s *Service) getUserDtoWithCache(ctx context.Context, redisClient *redis.Cl
 }
 
 // deleteCache 删除用户缓存
-func (s *Service) deleteCache(ctx context.Context, redisClient *redis.Client, ids ...int64) {
+func (s *Service) deleteCache(ctx context.Context, ids ...int64) {
 	if len(ids) == 0 {
 		return
 	}
@@ -121,7 +121,7 @@ func (s *Service) deleteCache(ctx context.Context, redisClient *redis.Client, id
 		keys = append(keys, key)
 	}
 
-	_, err := redisClient.Del(ctx, keys...)
+	_, err := redis.Client.Del(ctx, keys...)
 	if err != nil {
 		logz.Logger.Warn("删除用户缓存失败", zap.Error(err))
 	}

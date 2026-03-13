@@ -18,7 +18,7 @@ type Container struct {
 	userRepo *repository.UserRepository
 	roleRepo *repository.RoleRepository
 
-	// Service 实例（无状态，不包含 redisClient）
+	// Service 实例（无状态，内部直接使用redis.Client）
 	baseService *base.Service
 	userService *user.Service
 	roleService *role.Service
@@ -41,17 +41,17 @@ func Init() {
 	})
 }
 
-// Base 获取基础服务（redisClient 作为方法参数传入）
+// Base 获取基础服务
 func (c *Container) Base() *base.Service {
 	return c.baseService
 }
 
-// User 获取用户服务（redisClient 作为方法参数传入）
+// User 获取用户服务
 func (c *Container) User() *user.Service {
 	return c.userService
 }
 
-// Role 获取角色服务（redisClient 作为方法参数传入）
+// Role 获取角色服务
 func (c *Container) Role() *role.Service {
 	return c.roleService
 }

@@ -1,7 +1,7 @@
 package request
 
 import (
-	"github.com/nilchaosky/go-nexus/nexus_enum"
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 )
 
@@ -21,8 +21,8 @@ type GetRoleListPageRequest struct {
 
 // CreateRoleRequest 创建角色请求
 type CreateRoleRequest struct {
-	Title string `json:"title" binding:"required,max=20" label:"角色名称"` // 角色名称（必填，最大20字符）
-	Code  string `json:"code" binding:"required,max=20" label:"角色代码"`  // 角色代码（必填，最大20字符）
+	Title string `json:"title" binding:"required,max=20" label:"角色名称"` // 角色名称（必填，最多20字符）
+	Code  string `json:"code" binding:"required,max=20" label:"角色代码"`  // 角色代码（必填，最多20字符）
 }
 
 // BatchDeleteRoleRequest 批量删除角色请求

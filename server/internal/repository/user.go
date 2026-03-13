@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/nilchaosky/databases-gorm"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
+	"github.com/nilchaosky/go-nexus/enum"
 	"gorm.io/gorm"
 )
 

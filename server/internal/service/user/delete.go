@@ -5,12 +5,11 @@ import (
 	"errors"
 
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/redis"
 	"go.uber.org/zap"
 )
 
 // DeleteUser 删除用户
-func (s *Service) DeleteUser(ctx context.Context, redisClient *redis.Client, id int64) error {
+func (s *Service) DeleteUser(ctx context.Context, id int64) error {
 	user, err := s.userRepo.GetByID(ctx, id)
 	if err != nil {
 		logz.Logger.Warn("删除用户失败：查询用户失败", zap.Error(err))
@@ -26,7 +25,7 @@ func (s *Service) DeleteUser(ctx context.Context, redisClient *redis.Client, id 
 		return errors.New("删除用户失败")
 	}
 
-	s.deleteCache(ctx, redisClient, id)
+	s.deleteCache(ctx, id)
 
 	return nil
 }

@@ -6,10 +6,10 @@ import (
 	"server/internal/model"
 	"server/internal/query"
 
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/nexus_utils/crypto"
 	"github.com/nilchaosky/go-nexus/snowflake"
+	"github.com/nilchaosky/go-nexus/utils/crypto"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

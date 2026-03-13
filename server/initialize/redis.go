@@ -22,15 +22,5 @@ func InitRedis() {
 		panic("Redis初始化失败: " + err.Error())
 	}
 
-	// 检查DB配置是否存在
-	if len(redisConfig.DB) == 0 {
-		panic("Redis配置中DB数组为空")
-	}
-
-	// 设置默认使用第一个DB库
-	if err := redis.SetIndex(redisConfig.DB[0]); err != nil {
-		panic("设置默认使用第一个DB库失败: " + err.Error())
-	}
-
 	logz.Logger.Info("Redis初始化完成")
 }

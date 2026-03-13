@@ -7,10 +7,11 @@ require (
 	github.com/gin-gonic/gin v1.10.1
 	github.com/nilchaosky/databases-gorm v1.0.3
 	github.com/nilchaosky/file-store v0.0.0-20260107115712-9df25a4f7f43
-	github.com/nilchaosky/go-nexus v0.0.0-20260104202356-c11d9294498c
+	github.com/nilchaosky/go-nexus v0.0.0-20260313081556-21e71c2907c7
 	go.uber.org/zap v1.27.1
 	gorm.io/gen v0.3.27
 	gorm.io/gorm v1.31.1
+	gorm.io/plugin/dbresolver v1.6.2
 )
 
 require (
@@ -75,6 +76,5 @@ require (
 	gorm.io/driver/postgres v1.6.0 // indirect
 	gorm.io/driver/sqlite v1.6.0 // indirect
 	gorm.io/hints v1.1.0 // indirect
-	gorm.io/plugin/dbresolver v1.6.2 // indirect
 	gorm.io/plugin/optimisticlock v1.1.3 // indirect
 )

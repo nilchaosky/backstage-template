@@ -6,17 +6,16 @@ import (
 	"server/internal/model"
 	"server/internal/types/request"
 
+	nexus_enum "github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/nexus_utils/crypto"
-	"github.com/nilchaosky/go-nexus/redis"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 	"github.com/nilchaosky/go-nexus/snowflake"
+	"github.com/nilchaosky/go-nexus/utils/crypto"
 	"go.uber.org/zap"
 )
 
 // CreateUser 创建用户
-func (s *Service) CreateUser(ctx context.Context, redisClient *redis.Client, req *request.CreateUserRequest) error {
+func (s *Service) CreateUser(ctx context.Context, req *request.CreateUserRequest) error {
 	existingUser, err := s.userRepo.GetByUsername(ctx, req.Username)
 	if err != nil {
 		logz.Logger.Error("创建用户失败：查询用户失败", zap.Error(err))

@@ -5,24 +5,22 @@ import (
 	"server/internal/service"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nilchaosky/go-nexus/nexusres_types"
-	"github.com/nilchaosky/go-nexus/redis"
+	nexus_types "github.com/nilchaosky/go-nexus/types"
 )
 
 // DeleteUser 删除用户
 func DeleteUser(c *gin.Context) {
-	var req nexusres_types.GinIDRequest
+	var req nexus_types.GinIDRequest
 	if err := c.ShouldBindQuery(&req); err != nil {
-		c.JSON(http.StatusOK, nexusres_types.Error("参数错误: "+err.Error()))
+		c.JSON(http.StatusOK, nexus_types.Error("参数错误: "+err.Error()))
 		return
 	}
 
-	redisClient := redis.GetDefaultClient()
-	err := service.Get().User().DeleteUser(c.Request.Context(), redisClient, req.ID)
+	err := service.Get().User().DeleteUser(c.Request.Context(), req.ID)
 	if err != nil {
-		c.JSON(http.StatusOK, nexusres_types.Error(err.Error()))
+		c.JSON(http.StatusOK, nexus_types.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, nexusres_types.SuccessWithNil())
+	c.JSON(http.StatusOK, nexus_types.SuccessWithNil())
 }

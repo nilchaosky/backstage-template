@@ -6,14 +6,14 @@ import (
 	"server/internal/model"
 	"server/internal/query"
 
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
 	"github.com/nilchaosky/go-nexus/snowflake"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
-// roles 角色模板列表（用于初始化）
+// roles 角色模板列表（用于初始化数据）
 var roles []*model.Role
 
 // init 初始化角色列表数据

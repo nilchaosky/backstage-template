@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/nilchaosky/go-nexus/gorm-model/postgres"
+	"github.com/nilchaosky/go-nexus/gorm_model/postgres"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 )
 

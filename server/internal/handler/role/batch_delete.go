@@ -6,15 +6,14 @@ import (
 	"server/internal/types/request"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nilchaosky/go-nexus/nexusres_types"
-	"github.com/nilchaosky/go-nexus/redis"
+	nexus_types "github.com/nilchaosky/go-nexus/types"
 )
 
 // BatchDeleteRole 批量删除角色
 func BatchDeleteRole(c *gin.Context) {
 	var req request.BatchDeleteRoleRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(http.StatusOK, nexusres_types.Error("参数错误: "+err.Error()))
+		c.JSON(http.StatusOK, nexus_types.Error("参数错误: "+err.Error()))
 		return
 	}
 
@@ -23,12 +22,11 @@ func BatchDeleteRole(c *gin.Context) {
 		ids = append(ids, id.Int64())
 	}
 
-	redisClient := redis.GetDefaultClient()
-	count, err := service.Get().Role().BatchDeleteRole(c.Request.Context(), redisClient, ids)
+	count, err := service.Get().Role().BatchDeleteRole(c.Request.Context(), ids)
 	if err != nil {
-		c.JSON(http.StatusOK, nexusres_types.Error(err.Error()))
+		c.JSON(http.StatusOK, nexus_types.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, nexusres_types.Success(&count))
+	c.JSON(http.StatusOK, nexus_types.Success(&count))
 }

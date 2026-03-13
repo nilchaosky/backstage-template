@@ -6,8 +6,7 @@ import (
 	"server/internal/types/request"
 
 	"github.com/gin-gonic/gin"
-	"github.com/nilchaosky/go-nexus/nexusres_types"
-	"github.com/nilchaosky/go-nexus/redis"
+	nexus_types "github.com/nilchaosky/go-nexus/types"
 	"github.com/nilchaosky/go-nexus/validator"
 )
 
@@ -19,12 +18,11 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	redisClient := redis.GetDefaultClient()
-	resp, err := service.Get().Base().Login(c.Request.Context(), redisClient, &req)
+	resp, err := service.Get().Base().Login(c.Request.Context(), &req)
 	if err != nil {
-		c.JSON(http.StatusOK, nexusres_types.Error(err.Error()))
+		c.JSON(http.StatusOK, nexus_types.Error(err.Error()))
 		return
 	}
 
-	c.JSON(http.StatusOK, nexusres_types.Success(resp))
+	c.JSON(http.StatusOK, nexus_types.Success(resp))
 }

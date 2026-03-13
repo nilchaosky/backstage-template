@@ -4,14 +4,13 @@ import (
 	"context"
 	"errors"
 
+	nexus_enum "github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/redis"
 	"go.uber.org/zap"
 )
 
 // DeleteRole 删除角色
-func (s *Service) DeleteRole(ctx context.Context, redisClient *redis.Client, id int64) error {
+func (s *Service) DeleteRole(ctx context.Context, id int64) error {
 	role, err := s.roleRepo.GetByID(ctx, id)
 	if err != nil {
 		logz.Logger.Warn("删除角色失败：查询角色失败", zap.Error(err))
@@ -32,7 +31,7 @@ func (s *Service) DeleteRole(ctx context.Context, redisClient *redis.Client, id 
 		return errors.New("删除角色失败")
 	}
 
-	s.deleteCache(ctx, redisClient, id)
+	s.deleteCache(ctx, id)
 
 	return nil
 }

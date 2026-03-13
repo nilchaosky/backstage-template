@@ -6,16 +6,15 @@ import (
 	"server/internal/dto"
 	"server/internal/types/request"
 
+	nexus_enum "github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/logz"
-	"github.com/nilchaosky/go-nexus/nexus_enum"
-	"github.com/nilchaosky/go-nexus/nexusres_types"
-	"github.com/nilchaosky/go-nexus/redis"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
+	nexus_types "github.com/nilchaosky/go-nexus/types"
 	"go.uber.org/zap"
 )
 
 // GetUserListPage 分页获取用户列表
-func (s *Service) GetUserListPage(ctx context.Context, redisClient *redis.Client, current, size int, input *request.UserListPageInput) (*nexusres_types.Page[dto.UserDto], error) {
+func (s *Service) GetUserListPage(ctx context.Context, current, size int, input *request.UserListPageInput) (*nexus_types.Page[dto.UserDto], error) {
 	var username string
 	var status nexus_enum.Status
 	if input != nil {
@@ -31,7 +30,7 @@ func (s *Service) GetUserListPage(ctx context.Context, redisClient *redis.Client
 
 	records := make([]*dto.UserDto, 0, len(users))
 	for _, user := range users {
-		userDto, err := s.getUserDtoWithCache(ctx, redisClient, variant.SerializeInt64(user.ID.Int64()))
+		userDto, err := s.getUserDtoWithCache(ctx, variant.SerializeInt64(user.ID.Int64()))
 		if err != nil {
 			logz.Logger.Warn("获取用户DTO失败", zap.Error(err), zap.Int64("user_id", user.ID.Int64()))
 			continue
@@ -41,7 +40,7 @@ func (s *Service) GetUserListPage(ctx context.Context, redisClient *redis.Client
 
 	hasMore := int64(current*size) < total
 
-	return &nexusres_types.Page[dto.UserDto]{
+	return &nexus_types.Page[dto.UserDto]{
 		Current: current,
 		Size:    size,
 		Total:   total,

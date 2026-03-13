@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"github.com/nilchaosky/go-nexus/nexus_enum"
+	"github.com/nilchaosky/go-nexus/enum"
 	"github.com/nilchaosky/go-nexus/serialize/variant"
 )
 
